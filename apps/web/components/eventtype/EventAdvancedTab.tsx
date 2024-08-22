@@ -360,6 +360,19 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                     )}
                   />
                 </div>
+                <div className="mt-4">
+                  <Controller
+                    name="forwardBookingParamsSuccessRedirect"
+                    render={({ field: { value, onChange } }) => (
+                      <CheckboxField
+                        description={t("forward_booking_params_redirect")}
+                        disabled={successRedirectUrlLocked.disabled}
+                        onChange={(e) => onChange(e)}
+                        checked={value}
+                      />
+                    )}
+                  />
+                </div>
                 <div
                   className={classNames(
                     "p-1 text-sm text-orange-600",

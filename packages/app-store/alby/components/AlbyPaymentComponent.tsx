@@ -168,6 +168,7 @@ function PaymentChecker(props: PaymentCheckerProps) {
             query: params,
             booking: props.booking,
             forwardParamsSuccessRedirect: props.eventType.forwardParamsSuccessRedirect,
+            forwardBookingParamsSuccessRedirect: props.eventType.forwardBookingParamsSuccessRedirect,
           });
         }
       })();
@@ -182,6 +183,7 @@ function PaymentChecker(props: PaymentCheckerProps) {
     props.eventType.id,
     props.eventType.successRedirectUrl,
     props.eventType.forwardParamsSuccessRedirect,
+    props.eventType.forwardBookingParamsSuccessRedirect,
     props.payment.success,
     searchParams,
     t,

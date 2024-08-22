@@ -307,6 +307,7 @@ const EventTypePage = (props: EventTypeSetupProps & { allActiveWorkflows?: Workf
       hosts: eventType.hosts.sort((a, b) => sortHosts(a, b, eventType.isRRWeightsEnabled)),
       successRedirectUrl: eventType.successRedirectUrl || "",
       forwardParamsSuccessRedirect: eventType.forwardParamsSuccessRedirect,
+      forwardBookingParamsSuccessRedirect: eventType.forwardBookingParamsSuccessRedirect,
       users: eventType.users,
       useEventTypeDestinationCalendarEmail: eventType.useEventTypeDestinationCalendarEmail,
       secondaryEmailId: eventType?.secondaryEmailId || -1,

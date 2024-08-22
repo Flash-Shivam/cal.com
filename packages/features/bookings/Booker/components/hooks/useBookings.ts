@@ -32,6 +32,7 @@ export interface IUseBookings {
           | "isDynamic"
           | "metadata"
           | "forwardParamsSuccessRedirect"
+          | "forwardBookingParamsSuccessRedirect"
           | "successRedirectUrl"
           | "length"
           | "recurringEvent"
@@ -228,6 +229,10 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, teamMemb
           event?.data?.forwardParamsSuccessRedirect === undefined
             ? true
             : event?.data?.forwardParamsSuccessRedirect,
+        forwardBookingParamsSuccessRedirect:
+          event?.data?.forwardBookingParamsSuccessRedirect === undefined
+            ? true
+            : event?.data?.forwardBookingParamsSuccessRedirect,
       });
     },
     onError: (err, _, ctx) => {
@@ -301,6 +306,10 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, teamMemb
           event?.data?.forwardParamsSuccessRedirect === undefined
             ? true
             : event?.data?.forwardParamsSuccessRedirect,
+        forwardBookingParamsSuccessRedirect:
+          event?.data?.forwardBookingParamsSuccessRedirect === undefined
+            ? true
+            : event?.data?.forwardBookingParamsSuccessRedirect,
       });
     },
   });

@@ -127,6 +127,7 @@ export type FormValues = {
   rescheduleWithSameRoundRobinHost: boolean;
   useEventTypeDestinationCalendarEmail: boolean;
   forwardParamsSuccessRedirect: boolean | null;
+  forwardBookingParamsSuccessRedirect: boolean | null;
   secondaryEmailId?: number;
   isRRWeightsEnabled: boolean;
 };

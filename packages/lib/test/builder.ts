@@ -123,6 +123,7 @@ export const buildEventType = (eventType?: Partial<EventType>): EventType => {
     metadata: null,
     successRedirectUrl: null,
     forwardParamsSuccessRedirect: true,
+    forwardBookingParamsSuccessRedirect: true,
     bookingFields: [],
     parentId: null,
     profileId: null,

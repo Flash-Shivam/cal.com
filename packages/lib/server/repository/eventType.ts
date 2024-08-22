@@ -461,6 +461,7 @@ export class EventTypeRepository {
       rescheduleWithSameRoundRobinHost: true,
       successRedirectUrl: true,
       forwardParamsSuccessRedirect: true,
+      forwardBookingParamsSuccessRedirect: true,
       currency: true,
       bookingFields: true,
       useEventTypeDestinationCalendarEmail: true,

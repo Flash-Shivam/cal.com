@@ -80,6 +80,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
               currency: true,
               successRedirectUrl: true,
               forwardParamsSuccessRedirect: true,
+              forwardBookingParamsSuccessRedirect: true,
             },
           },
         },

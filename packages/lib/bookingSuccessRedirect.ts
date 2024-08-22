@@ -29,7 +29,10 @@ type SuccessRedirectBookingType = Pick<
   responses?: any;
 };
 
-export const getBookingRedirectExtraParams = (booking: SuccessRedirectBookingType) => {
+export const getBookingRedirectExtraParams = (
+  booking: SuccessRedirectBookingType,
+  forwardBookingParamsSuccessRedirect: boolean
+) => {
   type BookingResponseKey = keyof SuccessRedirectBookingType;
   const redirectQueryParamKeys: BookingResponseKey[] = [
     "title",
@@ -43,34 +46,40 @@ export const getBookingRedirectExtraParams = (booking: SuccessRedirectBookingTyp
     .filter((key) => redirectQueryParamKeys.includes(key))
     .reduce((obj, key) => ({ ...obj, [key]: booking[key] }), {});
 
-  const serializeResponseValue = (value: any): string => {
-    if (Array.isArray(value)) {
-      return value.join(",");
-    } else if (typeof value === "object" && value !== null) {
-      return encodeURIComponent(JSON.stringify(value));
-    } else {
-      return String(value);
+  if (forwardBookingParamsSuccessRedirect) {
+    const serializeResponseValue = (value: any): string => {
+      if (Array.isArray(value)) {
+        return value.join(",");
+      } else if (typeof value === "object" && value !== null) {
+        return encodeURIComponent(JSON.stringify(value));
+      } else {
+        return String(value);
+      }
+    };
+
+    const responseParams = booking.responses
+      ? Object.keys(booking.responses as Record<string, any>).reduce((obj, key) => {
+          obj[`responses.${key}`] = serializeResponseValue((booking.responses as Record<string, any>)[key]);
+          return obj;
+        }, {} as Record<string, any>)
+      : {};
+
+    const meetingLink = (booking.references as { meetingUrl?: string }[] | undefined)?.find(
+      (ref: { meetingUrl?: string }) => ref.meetingUrl
+    )?.meetingUrl;
+
+    if (meetingLink) {
+      responseParams["responses.location"] = meetingLink;
     }
-  };
 
-  const responseParams = booking.responses
-    ? Object.keys(booking.responses as Record<string, any>).reduce((obj, key) => {
-        obj[`responses.${key}`] = serializeResponseValue((booking.responses as Record<string, any>)[key]);
-        return obj;
-      }, {} as Record<string, any>)
-    : {};
-
-  const meetingLink = (booking.references as { meetingUrl?: string }[] | undefined)?.find(
-    (ref: { meetingUrl?: string }) => ref.meetingUrl
-  )?.meetingUrl;
-
-  if (meetingLink) {
-    responseParams["responses.location"] = meetingLink;
+    return {
+      ...basicParams,
+      ...responseParams,
+    };
   }
 
   return {
     ...basicParams,
-    ...responseParams,
   };
 };
 
@@ -82,9 +91,11 @@ export const useBookingSuccessRedirect = () => {
     query,
     booking,
     forwardParamsSuccessRedirect,
+    forwardBookingParamsSuccessRedirect,
   }: {
     successRedirectUrl: EventType["successRedirectUrl"];
     forwardParamsSuccessRedirect: EventType["forwardParamsSuccessRedirect"];
+    forwardBookingParamsSuccessRedirect: EventType["forwardBookingParamsSuccessRedirect"];
     query: Record<string, string | null | undefined | boolean>;
     booking: SuccessRedirectBookingType;
   }) => {
@@ -95,7 +106,7 @@ export const useBookingSuccessRedirect = () => {
         navigateInTopWindow(url.toString());
         return;
       }
-      const bookingExtraParams = getBookingRedirectExtraParams(booking);
+      const bookingExtraParams = getBookingRedirectExtraParams(booking, forwardBookingParamsSuccessRedirect);
       const newSearchParams = getNewSeachParams({
         query: {
           ...query,

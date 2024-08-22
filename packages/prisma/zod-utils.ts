@@ -653,6 +653,7 @@ export const allManagedEventTypeProps: { [k in keyof Omit<Prisma.EventTypeSelect
   seatsShowAttendees: true,
   seatsShowAvailabilityCount: true,
   forwardParamsSuccessRedirect: true,
+  forwardBookingParamsSuccessRedirect: true,
   periodType: true,
   hashedLink: true,
   webhooks: true,

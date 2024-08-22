@@ -22,6 +22,7 @@ type Props = {
     id: number;
     successRedirectUrl: EventType["successRedirectUrl"];
     forwardParamsSuccessRedirect: EventType["forwardParamsSuccessRedirect"];
+    forwardBookingParamsSuccessRedirect: EventType["forwardBookingParamsSuccessRedirect"];
   };
   user: {
     username: string | null;
@@ -126,6 +127,7 @@ const PaymentForm = (props: Props) => {
         query: params,
         booking: props.booking,
         forwardParamsSuccessRedirect: props.eventType.forwardParamsSuccessRedirect,
+        forwardBookingParamsSuccessRedirect: props.eventType.forwardBookingParamsSuccessRedirect,
       });
     }
   };
